@@ -13,9 +13,11 @@ Installation
 1. Add the bundle to your project
 2. Add the following lines to your config.yml file:
 
+    ```yaml
     parameters:
       behat.paths.features: /path/your/features/
       behat.paths.reports:  /path/your/behat/reports/
+    ```
 
 Note that you need to run Behat with the formater parameter, in order to generator reports in JUnit format:
 
