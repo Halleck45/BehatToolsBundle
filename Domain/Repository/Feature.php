@@ -3,7 +3,7 @@
 namespace Hal\Bundle\BehatTools\Domain\Repository;
 
 use Symfony\Component\Finder\Finder,
-    FeatureInterface as Repo_FeatureInterface,
+    Hal\Bundle\BehatTools\Domain\Repository\FeatureInterface as Repo_FeatureInterface,
     Hal\Bundle\BehatTools\Domain\Factory\FeatureInterface as FeatureFactoryInterface,
     Hal\Bundle\BehatTools\Entity\FeatureInterface;
 
@@ -61,7 +61,7 @@ class Feature implements Repo_FeatureInterface
 
         foreach ($finder as $file) {
             $filename = $file->getRelativePathname();
-            $node = $this->factoryFeature($file->getRealpath());
+            $node = $this->factoryGherkinFeature($file->getRealpath());
             array_push($features, $node);
         }
 
@@ -79,7 +79,7 @@ class Feature implements Repo_FeatureInterface
         $finder = new Finder();
         $finder->files()->in($this->folder . dirname($filename))->name(basename($filename));
         foreach ($finder as $file) {
-            return $this->factoryFeature($file->getRealpath());
+            return $this->factoryGherkinFeature($file->getRealpath());
         }
         return null;
     }
@@ -88,9 +88,9 @@ class Feature implements Repo_FeatureInterface
      * Factory a gherkin node
      *
      * @param string $filename
-     * @return FeatureElementInterface
+     * @return FeatureInterface
      */
-    public function factoryFeature($filename)
+    public function factoryGherkinFeature($filename)
     {
         return $this->featureFactory->factory($filename);
     }

@@ -6,6 +6,7 @@ use Symfony\Component\Finder\Finder,
     Behat\Gherkin\Lexer,
     Behat\Gherkin\Parser;
 use Hal\Bundle\BehatTools\Domain\Repository\FeatureInterface as Repo_FeatureInterface,
+    Hal\Bundle\BehatTools\Domain\Factory\FeatureInterface as Factory_FeatureInterface,
     Hal\Bundle\BehatTools\Entity\FeatureInterface,
     Hal\BehatWizardBundle\Domain\Model\Feature;
 
@@ -22,7 +23,7 @@ use Hal\Bundle\BehatTools\Domain\Repository\FeatureInterface as Repo_FeatureInte
  *
  * @author Jean-François Lépine <jeanfrancois@lepine.pro>
  */
-class Factory implements FactoryInterface
+class Factory implements Factory_FeatureInterface
 {
 
     /**

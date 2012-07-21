@@ -1,6 +1,6 @@
 <?php
 
-namespace Hal\BehatWizardBundle\Manager\Behat\Feature;
+namespace Hal\Bundle\BehatTools\Domain\Factory;
 
 /*
  * This file is part of the Behat Wizard
@@ -15,7 +15,7 @@ namespace Hal\BehatWizardBundle\Manager\Behat\Feature;
  *
  * @author Jean-François Lépine <jeanfrancois@lepine.pro>
  */
-interface FactoryInterface
+interface FeatureInterface
 {
     /**
      * Factory a featureElement
