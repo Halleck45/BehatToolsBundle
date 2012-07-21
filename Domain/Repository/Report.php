@@ -4,7 +4,7 @@ namespace Hal\Bundle\BehatTools\Domain\Repository;
 
 use Symfony\Component\Finder\Finder,
     Hal\Bundle\BehatTools\Entity\GherkinInterface,
-    Hal\Bundle\BehatTools\Domain\Model\Report,
+    Hal\Bundle\BehatTools\Domain\Model\Report as ModelReport,
     Hal\Bundle\BehatTools\Domain\Repository\ReportInterface as Repo_ReportInterface;
 
 /*
@@ -44,7 +44,7 @@ class Report implements Repo_ReportInterface
      */
     public function __construct($reportFolder)
     {
-        $this->reportFolder = (string) rtrim($testsFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        $this->reportFolder = (string) rtrim($reportFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         $finder = new Finder();
         $finder->files()->in($this->reportFolder)->name('*.xml');
@@ -52,9 +52,7 @@ class Report implements Repo_ReportInterface
 
         foreach ($finder as $file) {
             $filename = $file->getRelativePathname();
-            $node = $this->factoryFeature($file->getRealpath());
-
-            $report = new Report(file_get_contents($node));
+            $report = new ModelReport(file_get_contents($file->getRealpath()));
             array_push($reports, $report);
         }
 
@@ -65,7 +63,7 @@ class Report implements Repo_ReportInterface
      * Get the report of the given feature
      *
      * @param GherkinInterface $feature
-     * @return Report
+     * @return ModelReport
      */
     public function getReportByFeature(GherkinInterface $feature)
     {
@@ -76,7 +74,7 @@ class Report implements Repo_ReportInterface
             }
         }
 
-        return new Report(null);
+        return new ModelReport(null);
     }
 
 }
