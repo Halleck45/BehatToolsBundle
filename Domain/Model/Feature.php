@@ -1,6 +1,6 @@
 <?php
 
-namespace Hal\Bundle\BehatTools\Model;
+namespace Hal\Bundle\BehatTools\Domain\Model;
 
 use Behat\Gherkin\Node\FeatureNode as FeatureNode,
     Hal\Bundle\BehatTools\Entity\FeatureInterface,

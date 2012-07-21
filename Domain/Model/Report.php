@@ -1,10 +1,10 @@
 <?php
 
-namespace Hal\Bundle\BehatTools\Model;
+namespace Hal\Bundle\BehatTools\Domain\Model;
 
-use Hal\Bundle\BehatTools\Model\Report\State\NotFound,
-    Hal\Bundle\BehatTools\Model\Report\State\Found,
-    Hal\Bundle\BehatTools\Model\Report\State\StateInterface,
+use Hal\Bundle\BehatTools\Domain\Model\Report\State\NotFound,
+    Hal\Bundle\BehatTools\Domain\Model\Report\State\Found,
+    Hal\Bundle\BehatTools\Domain\Model\Report\State\StateInterface,
     Hal\Bundle\BehatTools\Entity\ReportInterface;
 
 /*

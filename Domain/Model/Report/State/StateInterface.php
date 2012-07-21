@@ -1,6 +1,6 @@
 <?php
 
-namespace Hal\Bundle\BehatTools\Model\Report\State;
+namespace Hal\Bundle\BehatTools\Domain\Model\Report\State;
 
 use Hal\Bundle\BehatTools\Entity\ReportInterface;
 
