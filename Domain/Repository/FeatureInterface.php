@@ -29,4 +29,6 @@ interface FeatureInterface
     public function getValidFeatures();
 
     public function getFailingFeatures();
+
+    public function loadFeatureByHash($hash);
 }

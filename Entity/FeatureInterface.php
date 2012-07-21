@@ -31,4 +31,11 @@ interface FeatureInterface
      * @return GherkinInterface
      */
     public function getGherkin();
+
+    /**
+     * Get a hash to identify the feature
+     *
+     * @return string
+     */
+    public function getHash();
 }

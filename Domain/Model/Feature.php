@@ -53,7 +53,8 @@ class Feature implements FeatureInterface
      *
      * @return ReportInterface
      */
-    public function getReport() {
+    public function getReport()
+    {
         return $this->report;
     }
 
@@ -62,7 +63,19 @@ class Feature implements FeatureInterface
      *
      * @return GherkinInterface
      */
-    public function getGherkin() {
+    public function getGherkin()
+    {
         return $this->gherkinObject;
     }
+
+    /**
+     * Get a hash to identify the feature
+     *
+     * @return string
+     */
+    public function getHash()
+    {
+        return spl_object_hash($this);
+    }
+
 }

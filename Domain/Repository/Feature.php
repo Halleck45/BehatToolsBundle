@@ -159,4 +159,20 @@ class Feature implements Repo_FeatureInterface
         return str_replace($this->folder, '', $node->getFile());
     }
 
+    /**
+     * Get features
+     *
+     * @return null|EntityFeatureInterface
+     */
+    public function loadFeatureByHash($hash)
+    {
+        $features = $this->getFeatures();
+        foreach ($features as $feature) {
+            if ($feature->getHash() === $hash) {
+                return $feature;
+            }
+        }
+        return null;
+    }
+
 }
