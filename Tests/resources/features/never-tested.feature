@@ -1,26 +1,27 @@
-Feature: All is correct
+Feature: Never tested
   In order to anything
   As as anything
   I should be able to do anything
 
-  Scenario: all-ok - correct scenario 1
+
+  Scenario: never-tested - correct scenario 1
     Given anything true
     When anything true
     Then anything true
 
-  Scenario: all-ok - correct scenario 2
+  Scenario: never-tested - incorrect scenario 2
     Given anything true
-    Given anything true
+    Given anything false
     When anything true
     Then anything true
 
-  Scenario: all-ok - correct scenario 3
+  Scenario: never-tested - incorrect scenario 3
     Given anything true
-    When anything true
+    When anything false
     When anything true
     Then anything true
 
-  Scenario: all-ok - correct scenario 4
+  Scenario: never-tested - correct scenario 4
     Given anything true
     When anything true
     Then anything true

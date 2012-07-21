@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite errors="0" failures="2" name="It faisl sometimes" file="/home/data/www/jeff/github/BehatToolsBundle/Tests/resources/features/intermediate.feature" tests="14" time="0.005449">
-    <testcase classname="It faisl sometimes" name="maybe-ok - invalid scenario 1" time="0.001113">
+<testsuite errors="0" failures="2" name="It faisl sometimes" file="/home/data/www/jeff/github/BehatToolsBundle/Tests/resources/features/intermediate.feature" tests="14" time="0.005736">
+    <testcase classname="It faisl sometimes" name="maybe-ok - invalid scenario 1" time="0.001111">
         <failure message="Eh ! Anuthing was wrong
 Failed asserting that false matches expected true." type="failed"><![CDATA[
 exception 'PHPUnit_Framework_ExpectationFailedException' with message 'Eh ! Anuthing was wrong
@@ -31,11 +31,11 @@ Stack trace:
 #22 {main}
 ]]></failure>
     </testcase>
-    <testcase classname="It faisl sometimes" name="maybe-ok - valid scenario 2" time="0.001256">
+    <testcase classname="It faisl sometimes" name="maybe-ok - valid scenario 2" time="0.001280">
     </testcase>
-    <testcase classname="It faisl sometimes" name="maybe-ok - valid scenario 3" time="0.000952">
+    <testcase classname="It faisl sometimes" name="maybe-ok - valid scenario 3" time="0.001030">
     </testcase>
-    <testcase classname="It faisl sometimes" name="maybe-ok - invalid scenario 4" time="0.001335">
+    <testcase classname="It faisl sometimes" name="maybe-ok - invalid scenario 4" time="0.001420">
         <failure message="Eh ! Anuthing was wrong
 Failed asserting that false matches expected true." type="failed"><![CDATA[
 exception 'PHPUnit_Framework_ExpectationFailedException' with message 'Eh ! Anuthing was wrong

@@ -1,4 +1,7 @@
 Feature: All fails
+  In order to anything
+  As as anything
+  I should be able to do anything
 
   Scenario: never-ok - invalid scenario 1
     Given anything false

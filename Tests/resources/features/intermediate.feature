@@ -1,4 +1,8 @@
 Feature: It faisl sometimes
+  In order to anything
+  As as anything
+  I should be able to do anything
+
 
   Scenario: maybe-ok - invalid scenario 1
     Given anything false

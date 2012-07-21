@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite errors="0" failures="4" name="All fails" file="/home/data/www/jeff/github/BehatToolsBundle/Tests/resources/features/all-fail.feature" tests="15" time="0.013359">
-    <testcase classname="All fails" name="never-ok - invalid scenario 1" time="0.008222">
+<testsuite errors="0" failures="4" name="All fails" file="/home/data/www/jeff/github/BehatToolsBundle/Tests/resources/features/all-fail.feature" tests="15" time="0.013164">
+    <testcase classname="All fails" name="never-ok - invalid scenario 1" time="0.008139">
         <failure message="Eh ! Anuthing was wrong
 Failed asserting that false matches expected true." type="failed"><![CDATA[
 exception 'PHPUnit_Framework_ExpectationFailedException' with message 'Eh ! Anuthing was wrong
@@ -31,7 +31,7 @@ Stack trace:
 #22 {main}
 ]]></failure>
     </testcase>
-    <testcase classname="All fails" name="never-ok - invalid scenario 2" time="0.001359">
+    <testcase classname="All fails" name="never-ok - invalid scenario 2" time="0.001350">
         <failure message="Eh ! Anuthing was wrong
 Failed asserting that false matches expected true." type="failed"><![CDATA[
 exception 'PHPUnit_Framework_ExpectationFailedException' with message 'Eh ! Anuthing was wrong
@@ -62,7 +62,7 @@ Stack trace:
 #22 {main}
 ]]></failure>
     </testcase>
-    <testcase classname="All fails" name="never-ok - invalid scenario 3" time="0.001455">
+    <testcase classname="All fails" name="never-ok - invalid scenario 3" time="0.001342">
         <failure message="Eh ! Anuthing was wrong
 Failed asserting that false matches expected true." type="failed"><![CDATA[
 exception 'PHPUnit_Framework_ExpectationFailedException' with message 'Eh ! Anuthing was wrong
@@ -93,7 +93,7 @@ Stack trace:
 #22 {main}
 ]]></failure>
     </testcase>
-    <testcase classname="All fails" name="never-ok - invalid scenario 4" time="0.001342">
+    <testcase classname="All fails" name="never-ok - invalid scenario 4" time="0.001324">
         <failure message="Eh ! Anuthing was wrong
 Failed asserting that false matches expected true." type="failed"><![CDATA[
 exception 'PHPUnit_Framework_ExpectationFailedException' with message 'Eh ! Anuthing was wrong
