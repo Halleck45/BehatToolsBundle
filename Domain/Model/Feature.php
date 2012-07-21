@@ -42,7 +42,7 @@ class Feature implements FeatureInterface
      * @param FeatureNode $feature
      * @param Report $report
      */
-    public function __construct(GherkinInterface $feature, GherkinInterface $report)
+    public function __construct(GherkinInterface $feature, ReportInterface $report)
     {
         $this->gherkinObject = $feature;
         $this->report = $report;
@@ -53,12 +53,16 @@ class Feature implements FeatureInterface
      *
      * @return ReportInterface
      */
-    public function getReport();
+    public function getReport() {
+        return $this->report;
+    }
 
     /**
      * Get the current feature
      *
      * @return GherkinInterface
      */
-    public function getGherkin();
+    public function getGherkin() {
+        return $this->gherkinObject;
+    }
 }

@@ -22,7 +22,7 @@ use Behat\Gherkin\Node\ScenarioNode,
  *
  * @author Jean-François Lépine <jeanfrancois@lepine.pro>
  */
-class Feature implements GherkinInterface
+class Gherkin implements GherkinInterface
 {
 
     /**

@@ -5,7 +5,7 @@ namespace Hal\Bundle\BehatTools\Domain\Repository;
 use Symfony\Component\Finder\Finder,
     Hal\Bundle\BehatTools\Domain\Repository\FeatureInterface as Repo_FeatureInterface,
     Hal\Bundle\BehatTools\Domain\Factory\FeatureInterface as FeatureFactoryInterface,
-    Hal\Bundle\BehatTools\Entity\FeatureInterface;
+    Hal\Bundle\BehatTools\Entity\FeatureInterface as EntityFeatureInterface;
 
 /*
  * This file is part of the Behat Tools
@@ -88,7 +88,7 @@ class Feature implements Repo_FeatureInterface
      * Factory a gherkin node
      *
      * @param string $filename
-     * @return FeatureInterface
+     * @return EntityFeatureInterface
      */
     public function factoryGherkinFeature($filename)
     {

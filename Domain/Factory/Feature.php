@@ -5,10 +5,13 @@ namespace Hal\Bundle\BehatTools\Domain\Factory;
 use Symfony\Component\Finder\Finder,
     Behat\Gherkin\Lexer,
     Behat\Gherkin\Parser;
-use Hal\Bundle\BehatTools\Domain\Repository\FeatureInterface as Repo_FeatureInterface,
-    Hal\Bundle\BehatTools\Domain\Factory\FeatureInterface as Factory_FeatureInterface,
-    Hal\Bundle\BehatTools\Entity\FeatureInterface,
-    Hal\BehatWizardBundle\Domain\Model\Feature;
+
+use Hal\Bundle\BehatTools\Domain\Repository\ReportInterface as Repo_ReportInterface,
+ Hal\Bundle\BehatTools\Domain\Factory\FeatureInterface as Factory_FeatureInterface,
+ Hal\Bundle\BehatTools\Entity\FeatureInterface,
+ Hal\Bundle\BehatTools\Domain\Model\Feature as ModelFeature,
+ Hal\Bundle\BehatTools\Domain\Model\Gherkin as ModelGherkin,
+ Hal\Bundle\BehatTools\Exception\Domain\Factory\NotBuildable as NotBuildableException;
 
 /*
  * This file is part of the Behat Tools
@@ -23,7 +26,7 @@ use Hal\Bundle\BehatTools\Domain\Repository\FeatureInterface as Repo_FeatureInte
  *
  * @author Jean-François Lépine <jeanfrancois@lepine.pro>
  */
-class Factory implements Factory_FeatureInterface
+class Feature implements Factory_FeatureInterface
 {
 
     /**
@@ -45,22 +48,26 @@ class Factory implements Factory_FeatureInterface
      *
      * @param string $testsFolder
      */
-    public function __construct(Parser $parser, Repo_FeatureInterface $reportManager)
+    public function __construct(Parser $parser, Repo_ReportInterface $reportManager)
     {
         $this->parser = $parser;
-        $this->reportRepository= $reportManager;
+        $this->reportRepository = $reportManager;
     }
 
     /**
      * Factory a featureElement
      * 
-     * @return FeatureElementInterface
+     * @return FeatureInterface
      */
     public function factory($filename)
     {
+        if (!file_exists($filename)) {
+            throw new NotBuildableException(sprintf('File "%s" not found', $filename));
+        }
         $feature = $this->parser->parse(file_get_contents($filename), $filename);
-        $report = $this->reportRepository->getReportByFeature($feature);
-        return new Feature($feature, $report);
+        $proxy = new ModelGherkin($feature);
+        $report = $this->reportRepository->getReportByFeature($proxy);
+        return new ModelFeature($proxy, $report);
     }
 
 }
