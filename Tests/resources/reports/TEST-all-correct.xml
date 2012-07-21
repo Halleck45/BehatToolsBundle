@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite errors="0" failures="0" name="All is correct" file="/home/data/www/jeff/github/BehatToolsBundle/Tests/resources/features/all-correct.feature" tests="15" time="0.007127">
+    <testcase classname="All is correct" name="all-ok - correct scenario 1" time="0.002046">
+    </testcase>
+    <testcase classname="All is correct" name="all-ok - correct scenario 2" time="0.001304">
+    </testcase>
+    <testcase classname="All is correct" name="all-ok - correct scenario 3" time="0.001387">
+    </testcase>
+    <testcase classname="All is correct" name="all-ok - correct scenario 4" time="0.001259">
+    </testcase>
+</testsuite>
