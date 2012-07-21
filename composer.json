@@ -1,0 +1,21 @@
+{
+    "name": "halleck45/behat-tools-bundle",
+    "description": "This bundle provides a way to manage your features",
+    "keywords": ["behat"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+    {
+        "name": "Jean-François Lépine",
+        "homepage": "http://blog.lepine.pro"
+    }
+    ],
+    "require": {
+        "symfony/framework-bundle": ">=2.0,<2.2-dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "Hal\\Bundle\\BehatTool": ""
+        }
+    }
+}
