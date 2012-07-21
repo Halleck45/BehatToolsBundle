@@ -46,7 +46,7 @@ class Found implements StateInterface
     /**
      * Get content of the report file
      *
-     * @return null|string
+     * @return return string
      */
     public function getFile()
     {
@@ -56,7 +56,7 @@ class Found implements StateInterface
     /**
      * Get content of the report file
      *
-     * @return null|string
+     * @return return string
      */
     public function getReportContent()
     {
@@ -66,7 +66,7 @@ class Found implements StateInterface
     /**
      * Count errors
      *
-     * @return null|integer
+     * @return return integer
      */
     public function countErrors()
     {
@@ -74,19 +74,61 @@ class Found implements StateInterface
     }
 
     /**
+     * Count pending
+     *
+     * @return integer
+     */
+    public function countPending() {
+        $count = 0;
+        $cases = $this->listTestCases();
+        foreach($cases as $testcase) {
+            if((int) $this->xml['failures'] > 0) {
+                foreach($testcase->failure as $failure) {
+                    if((string) $failure['type'] == 'undefined') {
+                        $count++;
+                        break;
+                    }
+                }
+            }
+        }
+        return $count;
+    }
+
+    /**
      * Count failures
      *
-     * @return null|integer
+     * @return return integer
      */
     public function countFailures()
     {
-        return (int) $this->xml['failures'];
+        $count = 0;
+        $cases = $this->listTestCases();
+        foreach($cases as $testcase) {
+            if((int) $this->xml['failures'] > 0) {
+                foreach($testcase->failure as $failure) {
+                    if((string) $failure['type'] == 'failed') {
+                        $count++;
+                        break;
+                    }
+                }
+            }
+        }
+        return $count;
+    }
+    /**
+     * Count success
+     *
+     * @return return integer
+     */
+    public function countSuccess()
+    {
+        return $this->countTests() - ($this->countErrors() + $this->countFailures() + $this->countPending() );
     }
 
     /**
      * Count tests
      *
-     * @return null|integer
+     * @return return integer
      */
     public function countTests()
     {
@@ -96,7 +138,7 @@ class Found implements StateInterface
     /**
      * Get duration
      *
-     * @return null|float
+     * @return return float
      */
     public function getDuration()
     {

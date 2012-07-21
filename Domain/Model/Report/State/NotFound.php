@@ -45,7 +45,16 @@ class NotFound implements StateInterface
      */
     public function countErrors()
     {
-        return null;
+        return 0;
+    }
+
+    /**
+     * Count pending
+     *
+     * @return integer
+     */
+    public function countPending() {
+        return 0;
     }
 
     /**
@@ -55,7 +64,7 @@ class NotFound implements StateInterface
      */
     public function countFailures()
     {
-        return null;
+        return 0;
     }
 
     /**
@@ -64,6 +73,16 @@ class NotFound implements StateInterface
      * @return integer
      */
     public function countTests()
+    {
+        return 0;
+    }
+
+    /**
+     * Counts success
+     * 
+     * @return integer
+     */
+    public function countSuccess()
     {
         return 0;
     }

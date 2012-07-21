@@ -40,6 +40,20 @@ interface ReportInterface
     public function countFailures();
 
     /**
+     * Count success
+     *
+     * @return integer
+     */
+    public function countSuccess();
+
+    /**
+     * Count pending
+     *
+     * @return integer
+     */
+    public function countPending();
+
+    /**
      * Count tests
      *
      * @return integer

@@ -53,6 +53,16 @@ class Report implements ReportInterface
     }
 
     /**
+     * Count success
+     *
+     * @return integer
+     */
+    public function countSuccess()
+    {
+        return $this->state->countSuccess();
+    }
+
+    /**
      * Count errors
      *
      * @return integer
@@ -80,6 +90,15 @@ class Report implements ReportInterface
     public function countTests()
     {
         return $this->state->countTests();
+    }
+
+    /**
+     * Count pending
+     *
+     * @return integer
+     */
+    public function countPending() {
+        return $this->state->countPending();
     }
 
     /**
