@@ -1,0 +1,23 @@
+parameters:
+
+  hbt.feature.repository.class: Hal\Bundle\BehatTools\Domain\Repository\Feature
+  hbt.feature.factory.class: Hal\Bundle\BehatTools\Domain\Factory\Feature
+  hbt.report.repository.class: Hal\Bundle\BehatTools\Domain\Repository\Report
+
+services:
+  hbt.feature.repository:
+        class: %hbt.feature.repository.class%
+        arguments: 
+          - %behat.paths.features%
+          - @hbt.feature.factory
+
+  hbt.feature.factory:
+        class: %hbt.feature.factory.class%
+        arguments: 
+          - @gherkin.parser
+          - @hbt.report.repository
+
+  hbt.report.repository:
+        class: %hbt.report.repository.class%
+        arguments:
+          - %behat.paths.reports%
