@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class HalBehatWizardExtension extends Extension
+class HalBehatToolsExtension extends Extension
 {
     /**
      * {@inheritDoc}
@@ -25,7 +25,8 @@ class HalBehatWizardExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
         
-        $extension = new \Behat\Behat\DependencyInjection\BehatExtension;
+        $basePath = $container->getparameter('behat.paths.base');
+        $extension = new \Behat\Behat\DependencyInjection\BehatExtension($basePath);
         $extension->load($configs, $container);
         
         
