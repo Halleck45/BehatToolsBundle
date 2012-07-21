@@ -23,4 +23,10 @@ interface FeatureInterface
     public function getFeatureByPath($filename);
 
     public function factoryGherkinFeature($filename);
+
+    public function getPendingFeatures();
+
+    public function getValidFeatures();
+
+    public function getFailingFeatures();
 }

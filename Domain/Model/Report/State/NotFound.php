@@ -65,7 +65,7 @@ class NotFound implements StateInterface
      */
     public function countTests()
     {
-        return null;
+        return 0;
     }
 
     /**

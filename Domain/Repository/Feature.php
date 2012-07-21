@@ -85,6 +85,59 @@ class Feature implements Repo_FeatureInterface
     }
 
     /**
+     * Get pending features
+     *
+     * @return array
+     */
+    public function getPendingFeatures()
+    {
+        $features = $this->getFeatures();
+        $stack = array();
+        foreach ($features as $feature) {
+            if ($feature->getReport()->countTests() == 0) {
+                array_push($stack, $feature);
+            }
+        }
+        return $stack;
+    }
+
+    /**
+     * Get valid features
+     *
+     * @return array
+     */
+    public function getValidFeatures()
+    {
+        $features = $this->getFeatures();
+        $stack = array();
+        foreach ($features as $feature) {
+            if ($feature->getReport()->countErrors() == 0
+                && $feature->getReport()->countFailures() == 0) {
+                array_push($stack, $feature);
+            }
+        }
+        return $stack;
+    }
+
+    /**
+     * Get fails features
+     * 
+     * @return array
+     */
+    public function getFailingFeatures()
+    {
+        $features = $this->getFeatures();
+        $stack = array();
+        foreach ($features as $feature) {
+            if ($feature->getReport()->countErrors() >= 0
+                || $feature->getReport()->countFailures() > 0) {
+                array_push($stack, $feature);
+            }
+        }
+        return $stack;
+    }
+
+    /**
      * Factory a gherkin node
      *
      * @param string $filename
