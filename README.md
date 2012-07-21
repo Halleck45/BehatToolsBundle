@@ -1,4 +1,26 @@
 BehatToolsBundle
 ================
 
-Bundle to manage your Behat's features
+Bundle to manage your Behat's features.
+
+You can:
+ - find all your features (with criteriums)
+ - know the state of each feature
+
+Installation
+-----------
+
+1. Add the bundle to your project
+2. Add the following lines to your config.yml file:
+
+.. code-block:: yaml
+
+    parameters:
+      behat.paths.features: /path/your/features/
+      behat.paths.reports:  /path/your/behat/reports/
+
+Note that you need to run Behat with the formater parameter, in order to generator reports in JUnit format:
+
+.. code-block:: bash
+
+    $ behat -f junit --out reports
