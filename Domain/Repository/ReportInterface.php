@@ -27,4 +27,11 @@ interface ReportInterface
      * @return Report
      */
     public function getReportByFeature(GherkinInterface $feature);
+
+    /**
+     * Get all reports
+     *
+     * @return array
+     */
+    public function getReports();
 }

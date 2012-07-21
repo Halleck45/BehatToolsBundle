@@ -77,4 +77,13 @@ class Report implements Repo_ReportInterface
         return new ModelReport(null);
     }
 
+    /**
+     * Get all reports
+     *
+     * @return array
+     */
+    public function getReports() {
+        return $this->reports;
+    }
+
 }
