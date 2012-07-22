@@ -75,7 +75,7 @@ class Feature implements FeatureInterface
      */
     public function getHash()
     {
-        return spl_object_hash($this);
+        return md5($this->getGherkin()->getFile());
     }
 
 }
