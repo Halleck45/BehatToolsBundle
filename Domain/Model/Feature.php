@@ -3,9 +3,14 @@
 namespace Hal\Bundle\BehatTools\Domain\Model;
 
 use Behat\Gherkin\Node\FeatureNode as FeatureNode,
+    Behat\Gherkin\Dumper,
+    Behat\Gherkin\Keywords\KeywordsInterface,
     Hal\Bundle\BehatTools\Entity\FeatureInterface,
     Hal\Bundle\BehatTools\Entity\GherkinInterface,
-    Hal\Bundle\BehatTools\Entity\ReportInterface;
+    Hal\Bundle\BehatTools\Entity\ReportInterface,
+    Hal\Bundle\BehatTools\Domain\Model\Feature\Writer\WritteableInterface,
+    Hal\Bundle\BehatTools\Domain\Repository\FeatureInterface as Repo_FeatureInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /*
  * This file is part of the Behat Tools
@@ -20,7 +25,7 @@ use Behat\Gherkin\Node\FeatureNode as FeatureNode,
  *
  * @author Jean-François Lépine <jeanfrancois@lepine.pro>
  */
-class Feature implements FeatureInterface
+class Feature implements FeatureInterface, WritteableInterface
 {
 
     /**
@@ -37,15 +42,39 @@ class Feature implements FeatureInterface
     protected $report;
 
     /**
+     * Keywords used by behat
+     *
+     * @var KeywordsInterface
+     */
+    protected $keywords;
+
+    /**
+     * Feature manager
+     *
+     * @var Repo_FeatureInterface
+     */
+    protected $featureRepository;
+
+    /**
+     * Folder
+     *
+     * @var string
+     */
+    protected $folder;
+
+    /**
      * Constructor
      * 
      * @param FeatureNode $feature
      * @param Report $report
      */
-    public function __construct(GherkinInterface $feature, ReportInterface $report)
+    public function __construct(GherkinInterface $feature, ReportInterface $report, ContainerInterface $container)
     {
         $this->gherkinObject = $feature;
         $this->report = $report;
+        $this->keywords = $container->get('gherkin.keywords');
+        $this->featureRepository = $container->get('hbt.feature.repository');
+        $this->folder = rtrim($container->getParameter('behat.paths.features'), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -76,6 +105,39 @@ class Feature implements FeatureInterface
     public function getHash()
     {
         return md5($this->getGherkin()->getFile());
+    }
+
+    /**
+     * Get the content of the feature
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        $dumper = new Dumper($this->keywords);
+        return $dumper->dump($this->getGherkin()->getFeatureNode());
+    }
+
+    /**
+     * Set the content of the feature
+     *
+     * @param string
+     */
+    public function setContent($content)
+    {
+
+        // @tmp
+        // @todo
+        // don't use directly the DIC
+        $filename = 'tmp-' . uniqid() . '.feature';
+        $path = $this->folder . $filename;
+        file_put_contents($path, $content);
+        $feature = $this->featureRepository->getFeatureByPath($filename);
+        unlink($path);
+        if ($feature === null) {
+            throw new \Exception('Cannot set the content of the feature');
+        }
+        $this->gherkinObject = $feature->getGherkin();
     }
 
 }

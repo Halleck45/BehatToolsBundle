@@ -4,14 +4,17 @@ namespace Hal\Bundle\BehatTools\Domain\Factory;
 
 use Symfony\Component\Finder\Finder,
     Behat\Gherkin\Lexer,
-    Behat\Gherkin\Parser;
-
+    Behat\Gherkin\Parser,
+    Behat\Gherkin\Keywords\KeywordsInterface;
 use Hal\Bundle\BehatTools\Domain\Repository\ReportInterface as Repo_ReportInterface,
- Hal\Bundle\BehatTools\Domain\Factory\FeatureInterface as Factory_FeatureInterface,
- Hal\Bundle\BehatTools\Entity\FeatureInterface,
- Hal\Bundle\BehatTools\Domain\Model\Feature as ModelFeature,
- Hal\Bundle\BehatTools\Domain\Model\Gherkin as ModelGherkin,
- Hal\Bundle\BehatTools\Exception\Domain\Factory\NotBuildable as NotBuildableException;
+    Hal\Bundle\BehatTools\Domain\Repository\FeatureInterface as Repo_FeatureInterface,
+    Hal\Bundle\BehatTools\Domain\Factory\FeatureInterface as Factory_FeatureInterface,
+    Hal\Bundle\BehatTools\Entity\FeatureInterface,
+    Hal\Bundle\BehatTools\Domain\Model\Feature as ModelFeature,
+    Hal\Bundle\BehatTools\Domain\Model\Gherkin as ModelGherkin,
+    Hal\Bundle\BehatTools\Exception\Domain\Factory\NotBuildable as NotBuildableException;
+
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /*
  * This file is part of the Behat Tools
@@ -37,21 +40,29 @@ class Feature implements Factory_FeatureInterface
     private $reportRepository;
 
     /**
-     * Gherkin parser
+     * Feature manager
      *
-     * @var Behat\Gherkin\Parser
+     * @var Repo_FeatureInterface
      */
-    private $parser;
+    private $featureRepository;
+
+    /**
+     * Keywords used by behat
+     *
+     * @var ContainerInterface
+     */
+    private $container;
 
     /**
      * Constructor
      *
      * @param string $testsFolder
      */
-    public function __construct(Parser $parser, Repo_ReportInterface $reportManager)
+    public function __construct(Parser $parser, Repo_ReportInterface $reportManager, ContainerInterface $container)
     {
         $this->parser = $parser;
         $this->reportRepository = $reportManager;
+        $this->container = $container;
     }
 
     /**
@@ -67,7 +78,7 @@ class Feature implements Factory_FeatureInterface
         $feature = $this->parser->parse(file_get_contents($filename), $filename);
         $proxy = new ModelGherkin($feature);
         $report = $this->reportRepository->getReportByFeature($proxy);
-        return new ModelFeature($proxy, $report);
+        return new ModelFeature($proxy, $report, $this->container);
     }
 
 }

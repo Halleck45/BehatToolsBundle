@@ -16,6 +16,7 @@ services:
         arguments: 
           - @gherkin.parser
           - @hbt.report.repository
+          - @service_container
 
   hbt.report.repository:
         class: %hbt.report.repository.class%

@@ -6,7 +6,10 @@ use Behat\Gherkin\Node\FeatureNode as FeatureNode,
     Hal\Bundle\BehatTools\Entity\FeatureInterface,
     Hal\Bundle\BehatTools\Entity\GherkinInterface,
     Hal\Bundle\BehatTools\Entity\ReportInterface;
-use \Behat\Gherkin\Node\OutlineNode;
+use \Behat\Gherkin\Node\OutlineNode,
+    \Behat\Gherkin\Node\AbstractScenarioNode,
+    \Behat\Gherkin\Node\BackgroundNode
+;
 use Symfony\Component\Serializer\Serializer,
     Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer,
     Symfony\Component\Serializer\Encoder\JsonEncoder;
@@ -44,44 +47,59 @@ class Json extends DumperAbstract
             , 'as' => $description[1]
             , 'should' => $description[2]
             , 'scenarios' => array()
+            , 'background' => array()
         );
 
         //
         // Scenarios
         foreach ($gherkin->getScenarios() as $scenario) {
-            $tmpScenario = array(
-                'title' => $scenario->getTitle()
-                , 'steps' => array()
-                , 'isOutline' => ($scenario instanceof OutlineNode)
-                , 'examples' => array()
-            );
-            if ($tmpScenario['isOutline']) {
-                $tmpScenario['examples'] = $scenario->getExamples()->getRows();
-            }
-
-            //
-            // Steps
-            foreach ($scenario->getSteps() as $step) {
-                $tmpStep = array(
-                    'type' => $step->getType()
-                    , 'text' => $step->getText()
-                    , 'outline' => array()
-                );
-
-                $args = $step->getArguments();
-                if (sizeof($args) > 0) {
-                    $rows = $args[0]->getRows();
-                    $tmpStep['outline'] = $rows;
-                }
-
-                array_push($tmpScenario['steps'], $tmpStep);
-            }
-
-            array_push($result['scenarios'], $tmpScenario);
+            array_push($result['scenarios'], $this->_dumpSteppable($scenario));
         }
+
+        //
+        // Background
+        $result['background'] = $this->_dumpSteppable($gherkin->getBackground());
 
         $jsonEncoder = new JsonEncoder();
         return $jsonEncoder->encode($result, 'json');
+    }
+
+    /**
+     * Dump content for scenario and background nodes
+     * 
+     * @param AbstractScenarioNode $node
+     * @return string
+     */
+    protected function _dumpSteppable(AbstractScenarioNode $node)
+    {
+        $newNode = array(
+            'title' => ($node instanceof BackgroundNode ? '' : $node->getTitle())
+            , 'steps' => array()
+            , 'isOutline' => ($node instanceof OutlineNode)
+            , 'examples' => array()
+        );
+        if ($newNode['isOutline']) {
+            $newNode['examples'] = $node->getExamples()->getRows();
+        }
+
+        //
+        // Steps
+        foreach ($node->getSteps() as $step) {
+            $tmpStep = array(
+                'type' => $step->getType()
+                , 'text' => $step->getText()
+                , 'outline' => array()
+            );
+
+            $args = $step->getArguments();
+            if (sizeof($args) > 0) {
+                $rows = $args[0]->getRows();
+                $tmpStep['outline'] = $rows;
+            }
+
+            array_push($newNode['steps'], $tmpStep);
+        }
+        return $newNode;
     }
 
 }

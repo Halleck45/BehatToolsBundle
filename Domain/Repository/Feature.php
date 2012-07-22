@@ -5,7 +5,8 @@ namespace Hal\Bundle\BehatTools\Domain\Repository;
 use Symfony\Component\Finder\Finder,
     Hal\Bundle\BehatTools\Domain\Repository\FeatureInterface as Repo_FeatureInterface,
     Hal\Bundle\BehatTools\Domain\Factory\FeatureInterface as FeatureFactoryInterface,
-    Hal\Bundle\BehatTools\Entity\FeatureInterface as EntityFeatureInterface;
+    Hal\Bundle\BehatTools\Entity\FeatureInterface as EntityFeatureInterface,
+    Hal\Bundle\BehatTools\Domain\Model\Feature\Writer\WritteableInterface;
 
 /*
  * This file is part of the Behat Tools
@@ -173,6 +174,27 @@ class Feature implements Repo_FeatureInterface
             }
         }
         return null;
+    }
+
+    /**
+     * Save the given feature
+     *
+     * @todo use Symfony component
+     * 
+     * @param EntityFeatureInterface $feature
+     */
+    public function saveFeature(WritteableInterface $feature) {
+        $gherkin = $feature->getGherkin();
+        $filename = $gherkin->getFile();
+        if(file_exists($filename)) {
+//            unlink($filename);
+        }
+
+        $name = strtolower($gherkin->getTitle());
+        $name = preg_replace('!([^A-Za-z0-9])!', '-', $name);
+        $name = preg_replace('!--*!', '-', $name);
+        $filename = $this->folder.$name.'.feature';
+        file_put_contents($filename, $feature->getContent());
     }
 
 }
