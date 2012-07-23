@@ -175,7 +175,7 @@ class Feature implements Repo_FeatureInterface {
      */
     public function saveFeature(WritteableInterface $feature) {
         $this->removeFeature($feature);
-
+        $gherkin = $feature->getGherkin();
         $name = strtolower($gherkin->getTitle());
         $name = preg_replace('!([^A-Za-z0-9])!', '-', $name);
         $name = preg_replace('!--*!', '-', $name);
