@@ -27,16 +27,14 @@ use Symfony\Component\Serializer\Serializer,
  *
  * @author Jean-François Lépine <jeanfrancois@lepine.pro>
  */
-class Json extends DumperAbstract
-{
+class Json extends DumperAbstract {
 
     /**
      * Dump
      *
      * @return string
      */
-    public function dump()
-    {
+    public function dump() {
         $gherkin = $this->feature->getGherkin();
         $description = array_pad(preg_split('!\n!', $gherkin->getDescription(), 4), 4, '');
 
@@ -58,7 +56,9 @@ class Json extends DumperAbstract
 
         //
         // Background
-        $result['background'] = $this->_dumpSteppable($gherkin->getBackground());
+        if ($gherkin->getBackground()) {
+            $result['background'] = $this->_dumpSteppable($gherkin->getBackground());
+        }
 
         $jsonEncoder = new JsonEncoder();
         return $jsonEncoder->encode($result, 'json');
@@ -70,8 +70,7 @@ class Json extends DumperAbstract
      * @param AbstractScenarioNode $node
      * @return string
      */
-    protected function _dumpSteppable(AbstractScenarioNode $node)
-    {
+    protected function _dumpSteppable(AbstractScenarioNode $node) {
         $newNode = array(
             'title' => ($node instanceof BackgroundNode ? '' : $node->getTitle())
             , 'steps' => array()

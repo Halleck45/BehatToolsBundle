@@ -187,7 +187,7 @@ class Feature implements Repo_FeatureInterface
         $gherkin = $feature->getGherkin();
         $filename = $gherkin->getFile();
         if(file_exists($filename)) {
-//            unlink($filename);
+            unlink($filename);
         }
 
         $name = strtolower($gherkin->getTitle());
@@ -196,5 +196,19 @@ class Feature implements Repo_FeatureInterface
         $filename = $this->folder.$name.'.feature';
         file_put_contents($filename, $feature->getContent());
     }
-
+    
+    /**
+     * Create a new feature
+     *
+     * @return EntityFeatureInterface $feature
+     */
+    public function createFeature() {
+        $content = "Feature: My Feature\n\n Scenario: My scenario\n    Given anything";
+        $name = 'tmp-'.uniqid().'.feature';
+        $filename = $this->folder.$name;
+        file_put_contents($filename, $content);
+        $feature = $this->getFeatureByPath($name);
+        unlink($filename);
+        return $feature;
+    }
 }
