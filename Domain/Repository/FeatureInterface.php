@@ -2,6 +2,9 @@
 
 namespace Hal\Bundle\BehatTools\Domain\Repository;
 
+use Hal\Bundle\BehatTools\Domain\Model\Feature\Writer\WritteableInterface,
+    Hal\Bundle\BehatTools\Entity\FeatureInterface as EntityFeatureInterface;
+
 /*
  * This file is part of the Behat Tools
  * (c) 2012 Jean-François Lépine <jeanfrancois@lepine.pro>
@@ -15,8 +18,7 @@ namespace Hal\Bundle\BehatTools\Domain\Repository;
  *
  * @author Jean-François Lépine <jeanfrancois@lepine.pro>
  */
-interface FeatureInterface
-{
+interface FeatureInterface {
 
     public function getFeatures();
 
@@ -31,4 +33,10 @@ interface FeatureInterface
     public function getFailingFeatures();
 
     public function loadFeatureByHash($hash);
+
+    public function saveFeature(WritteableInterface $feature);
+
+    public function createFeature();
+
+    public function removeFeature(EntityFeatureInterface $feature);
 }

@@ -21,8 +21,7 @@ use Symfony\Component\Finder\Finder,
  *
  * @author Jean-François Lépine <jeanfrancois@lepine.pro>
  */
-class Feature implements Repo_FeatureInterface
-{
+class Feature implements Repo_FeatureInterface {
 
     /**
      * features path
@@ -43,8 +42,7 @@ class Feature implements Repo_FeatureInterface
      *
      * @param string $testsFolder
      */
-    public function __construct($testsFolder, FeatureFactoryInterface $featureFactory)
-    {
+    public function __construct($testsFolder, FeatureFactoryInterface $featureFactory) {
         $this->folder = (string) rtrim($testsFolder, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         $this->featureFactory = $featureFactory;
     }
@@ -54,8 +52,7 @@ class Feature implements Repo_FeatureInterface
      *
      * @return array
      */
-    public function getFeatures()
-    {
+    public function getFeatures() {
         $finder = new Finder();
         $finder->files()->in($this->folder)->name('*.feature');
         $features = array();
@@ -75,8 +72,7 @@ class Feature implements Repo_FeatureInterface
      * @param string $filename
      * @return null|Behat\Gherkin\Node\FeatureNode
      */
-    public function getFeatureByPath($filename)
-    {
+    public function getFeatureByPath($filename) {
         $finder = new Finder();
         $finder->files()->in($this->folder . dirname($filename))->name(basename($filename));
         foreach ($finder as $file) {
@@ -90,8 +86,7 @@ class Feature implements Repo_FeatureInterface
      *
      * @return array
      */
-    public function getPendingFeatures()
-    {
+    public function getPendingFeatures() {
         $features = $this->getFeatures();
         $stack = array();
         foreach ($features as $feature) {
@@ -107,13 +102,12 @@ class Feature implements Repo_FeatureInterface
      *
      * @return array
      */
-    public function getValidFeatures()
-    {
+    public function getValidFeatures() {
         $features = $this->getFeatures();
         $stack = array();
         foreach ($features as $feature) {
             if ($feature->getReport()->countErrors() == 0
-                && $feature->getReport()->countFailures() == 0) {
+                    && $feature->getReport()->countFailures() == 0) {
                 array_push($stack, $feature);
             }
         }
@@ -125,13 +119,12 @@ class Feature implements Repo_FeatureInterface
      * 
      * @return array
      */
-    public function getFailingFeatures()
-    {
+    public function getFailingFeatures() {
         $features = $this->getFeatures();
         $stack = array();
         foreach ($features as $feature) {
             if ($feature->getReport()->countErrors() >= 0
-                || $feature->getReport()->countFailures() > 0) {
+                    || $feature->getReport()->countFailures() > 0) {
                 array_push($stack, $feature);
             }
         }
@@ -144,8 +137,7 @@ class Feature implements Repo_FeatureInterface
      * @param string $filename
      * @return EntityFeatureInterface
      */
-    public function factoryGherkinFeature($filename)
-    {
+    public function factoryGherkinFeature($filename) {
         return $this->featureFactory->factory($filename);
     }
 
@@ -155,8 +147,7 @@ class Feature implements Repo_FeatureInterface
      * @param FeatureNode $node
      * @return type
      */
-    public function getRelativePath(FeatureInterface $node)
-    {
+    public function getRelativePath(FeatureInterface $node) {
         return str_replace($this->folder, '', $node->getFile());
     }
 
@@ -165,8 +156,7 @@ class Feature implements Repo_FeatureInterface
      *
      * @return null|EntityFeatureInterface
      */
-    public function loadFeatureByHash($hash)
-    {
+    public function loadFeatureByHash($hash) {
         $features = $this->getFeatures();
         foreach ($features as $feature) {
             if ($feature->getHash() === $hash) {
@@ -184,19 +174,15 @@ class Feature implements Repo_FeatureInterface
      * @param EntityFeatureInterface $feature
      */
     public function saveFeature(WritteableInterface $feature) {
-        $gherkin = $feature->getGherkin();
-        $filename = $gherkin->getFile();
-        if(file_exists($filename)) {
-            unlink($filename);
-        }
+        $this->removeFeature($feature);
 
         $name = strtolower($gherkin->getTitle());
         $name = preg_replace('!([^A-Za-z0-9])!', '-', $name);
         $name = preg_replace('!--*!', '-', $name);
-        $filename = $this->folder.$name.'.feature';
+        $filename = $this->folder . $name . '.feature';
         file_put_contents($filename, $feature->getContent());
     }
-    
+
     /**
      * Create a new feature
      *
@@ -204,11 +190,25 @@ class Feature implements Repo_FeatureInterface
      */
     public function createFeature() {
         $content = "Feature: My Feature\n\n Scenario: My scenario\n    Given anything";
-        $name = 'tmp-'.uniqid().'.feature';
-        $filename = $this->folder.$name;
+        $name = 'tmp-' . uniqid() . '.feature';
+        $filename = $this->folder . $name;
         file_put_contents($filename, $content);
         $feature = $this->getFeatureByPath($name);
         unlink($filename);
         return $feature;
     }
+
+    /**
+     * Remove the feature
+     *
+     * @param EntityFeatureInterface $feature
+     */
+    public function removeFeature(EntityFeatureInterface $feature) {
+        $gherkin = $feature->getGherkin();
+        $filename = $gherkin->getFile();
+        if (file_exists($filename)) {
+            unlink($filename);
+        }
+    }
+
 }
