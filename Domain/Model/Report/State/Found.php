@@ -33,6 +33,13 @@ class Found implements StateInterface
     private $xml;
 
     /**
+     * Cache
+     *
+     * @var array
+     */
+    private $testsCases;
+
+    /**
      * Constructor
      *
      * @param string $reportContent
@@ -78,20 +85,9 @@ class Found implements StateInterface
      *
      * @return integer
      */
-    public function countPending() {
-        $count = 0;
-        $cases = $this->listTestCases();
-        foreach($cases as $testcase) {
-            if((int) $this->xml['failures'] > 0) {
-                foreach($testcase->failure as $failure) {
-                    if((string) $failure['type'] == 'undefined') {
-                        $count++;
-                        break;
-                    }
-                }
-            }
-        }
-        return $count;
+    public function countPending()
+    {
+        return sizeof($this->listTestCasesByType('undefined'));
     }
 
     /**
@@ -101,20 +97,10 @@ class Found implements StateInterface
      */
     public function countFailures()
     {
-        $count = 0;
-        $cases = $this->listTestCases();
-        foreach($cases as $testcase) {
-            if((int) $this->xml['failures'] > 0) {
-                foreach($testcase->failure as $failure) {
-                    if((string) $failure['type'] == 'failed') {
-                        $count++;
-                        break;
-                    }
-                }
-            }
-        }
-        return $count;
+
+        return sizeof($this->listTestCasesByType('failed'));
     }
+
     /**
      * Count success
      *
@@ -122,7 +108,7 @@ class Found implements StateInterface
      */
     public function countSuccess()
     {
-        return $this->countTests() - ($this->countErrors() + $this->countFailures() + $this->countPending() );
+        return sizeof($this->listTestCasesByType('success'));
     }
 
     /**
@@ -132,7 +118,7 @@ class Found implements StateInterface
      */
     public function countTests()
     {
-        return (int) $this->xml['tests'];
+        return (int) sizeof($this->listTestCases());
     }
 
     /**
@@ -152,7 +138,50 @@ class Found implements StateInterface
      */
     public function listTestCases()
     {
-        return $this->xml;
+        if (!is_null($this->testsCases)) {
+            return $this->testsCases;
+        }
+        $testscases = array();
+        foreach ($this->xml->testcase as $case) {
+            $testcase = (object) array(
+                    'name' => $case['name']
+                    , 'classname' => $case['classname']
+                    , 'type' => 'success'
+                    , 'time' => $case->time
+                    , 'nbFails' => sizeof($case->failure)
+                    , 'failure' => $case->failure
+            );
+
+            if (sizeof($case->failure) > 0) {
+                $testcase->type = $case->failure[0]['type'];
+            }
+
+            array_push($testscases, $testcase);
+        }
+        $this->testsCases = $testscases;
+        return $testscases;
+    }
+
+    /**
+     * List all tests cases
+     *
+     * @param string $type
+     * @return array|SimpleXMLElement
+     */
+    private function listTestCasesByType($type)
+    {
+        $result = array();
+        $testscases = $this->listTestCases();
+        if ($type == 'all') {
+            return $testscases;
+        }
+
+        foreach ($testscases as $case) {
+            if ($case->type == $type) {
+                array_push($result, $case);
+            }
+        }
+        return $result;
     }
 
 }
