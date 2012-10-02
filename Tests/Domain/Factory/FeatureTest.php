@@ -39,7 +39,9 @@ class FactoryFeatureTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getReportByFeature')
             ->will($this->returnValue($report));
-        $this->factory = new FeatureFactory($parser, $repository);
+        
+        $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->factory = new FeatureFactory($parser, $repository, $container);
     }
 
     public function testWeCanFactoryAFeatureProvidingItsFilename()
