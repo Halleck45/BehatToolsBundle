@@ -17,7 +17,7 @@ class RespositoryFeatureTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('factory')
             ->will($this->returnValue($feature));
-        $folder = __DIR__ . '/../../resources/features/';
+        $folder = __DIR__ . '/../../Fixtures/features/';
         $this->repo = new Repo_Feature($folder, $factory);
     }
 

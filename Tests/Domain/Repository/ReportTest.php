@@ -11,7 +11,7 @@ class RespositoryReportTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $folder = __DIR__ . '/../../resources/reports/';
+        $folder = __DIR__ . '/../../Fixtures/reports/';
         $this->repo = new Repo_Report($folder);
     }
 
@@ -23,7 +23,7 @@ class RespositoryReportTest extends \PHPUnit_Framework_TestCase
         $feature
             ->expects($this->any())
             ->method('getFile')
-            ->will($this->returnValue(__DIR__.'../../resources/features/all-correct.feature'));
+            ->will($this->returnValue(__DIR__.'../../Fixtures/features/all-correct.feature'));
 
         $report = $this->repo->getReportByFeature($feature);
 
@@ -37,7 +37,7 @@ class RespositoryReportTest extends \PHPUnit_Framework_TestCase
         $feature
             ->expects($this->any())
             ->method('getFile')
-            ->will($this->returnValue(__DIR__.'../../resources/features/unexistent.feature'));
+            ->will($this->returnValue(__DIR__.'../../Fixtures/features/unexistent.feature'));
 
         $report = $this->repo->getReportByFeature($feature);
         $this->assertInstanceOf('Hal\Bundle\BehatTools\Entity\ReportInterface', $report, 'Unexistent report is created but is empty');
