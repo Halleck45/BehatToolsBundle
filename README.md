@@ -1,6 +1,8 @@
 BehatToolsBundle
 ================
 
+[![Build Status](http://travis-ci.org/kitpages/KitpagesDataGridBundle.png)](http://travis-ci.org/#!/kitpages/KitpagesDataGridBundle)
+
 Bundle to manage your Behat's features.
 
 You can:
