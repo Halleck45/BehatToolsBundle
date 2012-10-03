@@ -1,7 +1,7 @@
 BehatToolsBundle
 ================
 
-[![Build Status](http://travis-ci.org/Halleck45/BehatToolsBundle.png)](http://travis-ci.org/#!/Halleck45/BehatToolsBundle)
+[![Build Status](https://secure.travis-ci.org/Halleck45/BehatToolsBundle.png)](http://travis-ci.org/Halleck45/BehatToolsBundle)
 
 Bundle to manage your Behat's features.
 
