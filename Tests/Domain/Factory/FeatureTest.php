@@ -40,13 +40,15 @@ class FactoryFeatureTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('getReportByFeature')
             ->will($this->returnValue($report));
+
+        $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $this->factory = new FeatureFactory($parser, $repository, $container);
     }
 
     public function testWeCanFactoryAFeatureProvidingItsFilename()
     {
 
-        $filename = __DIR__ . '/../../resources/features/all-correct.feature';
+        $filename = __DIR__ . '/../../Fixtures/features/all-correct.feature';
         $feature = $this->factory->factory($filename);
         $this->assertInstanceOf('Hal\Bundle\BehatTools\Entity\FeatureInterface', $feature, 'We can factory a feature');
     }
