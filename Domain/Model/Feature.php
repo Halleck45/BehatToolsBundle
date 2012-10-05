@@ -3,7 +3,7 @@
 namespace Hal\Bundle\BehatTools\Domain\Model;
 
 use Behat\Gherkin\Node\FeatureNode as FeatureNode,
-    Behat\Gherkin\Dumper,
+    Behat\Gherkin\Dumper\GherkinDumper as Dumper,
     Behat\Gherkin\Keywords\KeywordsInterface,
     Hal\Bundle\BehatTools\Entity\FeatureInterface,
     Hal\Bundle\BehatTools\Entity\GherkinInterface,
@@ -30,8 +30,8 @@ class Feature implements FeatureInterface, WritteableInterface
 
     /**
      * Contains the feature node
-     * 
-     * @var FeatureNode 
+     *
+     * @var FeatureNode
      */
     protected $gherkinObject;
 
@@ -64,7 +64,7 @@ class Feature implements FeatureInterface, WritteableInterface
 
     /**
      * Constructor
-     * 
+     *
      * @param FeatureNode $feature
      * @param Report $report
      */

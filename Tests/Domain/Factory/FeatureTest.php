@@ -35,11 +35,12 @@ class FactoryFeatureTest extends \PHPUnit_Framework_TestCase
 
         $report = $this->getMock('Hal\Bundle\BehatTools\Entity\ReportInterface');
         $repository = $this->getMock('Hal\Bundle\BehatTools\Domain\Repository\ReportInterface');
+        $container = $this->getMock('\Symfony\Component\DependencyInjection\ContainerInterface');
         $repository
             ->expects($this->any())
             ->method('getReportByFeature')
             ->will($this->returnValue($report));
-        $this->factory = new FeatureFactory($parser, $repository);
+        $this->factory = new FeatureFactory($parser, $repository, $container);
     }
 
     public function testWeCanFactoryAFeatureProvidingItsFilename()

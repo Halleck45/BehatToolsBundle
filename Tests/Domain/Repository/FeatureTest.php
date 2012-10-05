@@ -24,7 +24,7 @@ class RespositoryFeatureTest extends \PHPUnit_Framework_TestCase
     public function testRepoFindsAllFeatures()
     {
         $features = $this->repo->getFeatures();
-        $this->assertCount(3, $features, 'All features are found');
+        $this->assertCount(5, $features, 'All features are found');
     }
 
     public function testRepoFindFeatureByItsPath()
