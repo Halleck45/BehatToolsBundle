@@ -32,8 +32,12 @@ class Report implements ReportInterface
 
     public function __construct($content)
     {
+        $content = trim($content);
         switch ($content) {
             case null:
+                $this->state = new NotFound;
+                break;
+            case '<?xml version="1.0" encoding="UTF-8"?>':
                 $this->state = new NotFound;
                 break;
             default:
